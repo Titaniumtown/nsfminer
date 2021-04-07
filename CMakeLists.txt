@@ -73,14 +73,13 @@ endfunction()
 
 if(USE_SYS_LIBS)
     find_package(Boost REQUIRED COMPONENTS system filesystem thread program_options)
-    find_package(jsoncpp REQUIRED)
 else()
     hunter_add_package(Boost COMPONENTS system filesystem thread program_options)
     find_package(Boost CONFIG REQUIRED COMPONENTS system filesystem thread program_options)
-
-    hunter_add_package(jsoncpp)
-    find_package(jsoncpp CONFIG REQUIRED)
 endif()
+
+hunter_add_package(jsoncpp)
+find_package(jsoncpp CONFIG REQUIRED)
 
 hunter_add_package(ethash)
 find_package(ethash CONFIG REQUIRED)

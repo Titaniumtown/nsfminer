@@ -41,7 +41,6 @@ You can use either [paru](https://github.com/morganamilo/paru) (recommended) or 
 
 ```shell
 paru -S openssl ocl-icd opencl-headers boost-libs
-paru -S jsoncpp-cmake-git -d --nodeps
 ```
 
 #### OpenCL support on Linux
