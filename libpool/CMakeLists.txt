@@ -14,8 +14,10 @@ set(SOURCES
 	stratum/EthStratumClient.h stratum/EthStratumClient.cpp
 	getwork/EthGetworkClient.h getwork/EthGetworkClient.cpp
 )
+if(NOT USE_SYS_LIBS)
+	hunter_add_package(OpenSSL)
+endif()
 
-hunter_add_package(OpenSSL)
 find_package(OpenSSL REQUIRED)
 
 add_library(pool ${SOURCES})

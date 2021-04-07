@@ -21,8 +21,12 @@ if(MSVC)
 	target_sources(${EXECUTABLE} PRIVATE nsfminer.rc)
 endif()
 
-hunter_add_package(Boost COMPONENTS program_options)
-find_package(Boost CONFIG REQUIRED COMPONENTS program_options)
+if(USE_SYS_LIBS)
+	find_package(Boost REQUIRED COMPONENTS program_options)
+else()
+	hunter_add_package(Boost COMPONENTS program_options)
+	find_package(Boost CONFIG REQUIRED COMPONENTS program_options)
+endif()
 
 target_link_libraries(nsfminer PRIVATE
         eth pool dev nsfminer-buildinfo Boost::system Boost::thread Boost::program_options)

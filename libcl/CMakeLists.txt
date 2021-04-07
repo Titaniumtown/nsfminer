@@ -28,8 +28,13 @@ set(SOURCES
 	${CMAKE_CURRENT_BINARY_DIR}/ethash.h
 )
 
-hunter_add_package(OpenCL)
-find_package(OpenCL CONFIG REQUIRED)
+
+if(USE_SYS_OPENCL)
+	find_package(OpenCL REQUIRED)
+else()
+	hunter_add_package(OpenCL)
+	find_package(OpenCL CONFIG REQUIRED)
+endif()
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(..)
