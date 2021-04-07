@@ -7,6 +7,7 @@
   - [Requirements](#requirements)
     - [Common](#common)
     - [Linux](#linux)
+      - [ROCM](#rocm)
       - [Arch Linux:](#arch-linux)
       - [OpenCL support on Linux](#opencl-support-on-linux)
     - [Windows](#windows)
@@ -35,13 +36,15 @@ This project uses [CMake] and [Hunter] package manager.
 ```shell
 sudo apt install libdbus-1-dev
 ```
+#### ROCM
 
 #### Arch Linux:
-You can use either [paru](https://github.com/morganamilo/paru) (recommended) or [yay](https://github.com/Jguer/yay)
-
+You want to install ROCM from [here](https://github.com/rocm-arch/rocm-arch). If you want to download pre-built packages, [add arch4edu](https://github.com/arch4edu/arch4edu/wiki/Add-arch4edu-to-your-Archlinux) to pacman.
+Then run:
 ```shell
-paru -S openssl ocl-icd opencl-headers boost-libs
+sudo pacman -S rocm-dev rocm-utils rocm-libs rocm-opencl-runtime
 ```
+To compile, see the ROCM section in the build section.
 
 #### OpenCL support on Linux
 
@@ -76,7 +79,7 @@ These are sufficient for Ubuntu LTS releases. Other packages may be needed depen
     ```
 
 3. Configure the project with CMake. Check out the additional [configuration options](#cmake-configuration-options).
-
+    If you're using ROCM, append `-DUSE_SYS_OPENCL=ON -DOpenCL_INCLUDE_DIR=/opt/rocm/include -DOpenCL_LIBRARY=/opt/rocm/lib/libOpenCL.so` to the end of the following command:
     ```shell
     cmake ..
     ```
@@ -153,7 +156,8 @@ cmake .. -DETHASHCUDA=ON -DETHASHCL=OFF
 * `-DAPICORE=ON` - enable API Server, `ON` by default.
 * `-DBINKERN=ON` - install AMD binary kernels, `OFF` by default.
 * `-DETHDBUS=ON` - enable D-Bus support, `OFF` by default.
-* `-DUSE_SYS_OPENCL=ON` - Use system OpenCL, `OFF` by default, unless on macOS. Specify to use local **ROCm-OpenCL** package.
+* `-DUSE_SYS_OPENCL=ON` - Use system OpenCL, `OFF` by default, unless on macOS or `USE_SYS_LIBS` is on. Specify to use local **ROCm-OpenCL** package.
+* `-DUSE_SYS_LIBS=ON` - Use system libraries, `OFF` by default.
 
 ## Disable Hunter
 
