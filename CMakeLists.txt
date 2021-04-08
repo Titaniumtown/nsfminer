@@ -7,7 +7,7 @@
 # this file. 
 
 if(UNIX)
-# set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-implicit-int-float-conversion")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O3 -march=native -mtune=native")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native -mtune=native")
 endif()

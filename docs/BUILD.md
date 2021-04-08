@@ -44,7 +44,6 @@ Then run:
 ```shell
 sudo pacman -S rocm-dev rocm-utils rocm-libs rocm-opencl-runtime
 ```
-To compile, see the ROCM section in the build section.
 
 #### OpenCL support on Linux
 
@@ -79,7 +78,6 @@ These are sufficient for Ubuntu LTS releases. Other packages may be needed depen
     ```
 
 3. Configure the project with CMake. Check out the additional [configuration options](#cmake-configuration-options).
-    If you're using ROCM, append `-DUSE_SYS_OPENCL=ON -DOpenCL_INCLUDE_DIR=/opt/rocm/include -DOpenCL_LIBRARY=/opt/rocm/lib/libOpenCL.so` to the end of the following command:
     ```shell
     cmake ..
     ```
