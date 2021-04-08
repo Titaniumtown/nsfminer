@@ -45,6 +45,7 @@ option(APICORE "Build with API Server support" ON)
 option(DEVBUILD "Log developer metrics" OFF)
 option(USE_SYS_OPENCL "Build with system OpenCL" OFF)
 option(USE_SYS_LIBS "Build using system libs" OFF)
+option(OLDCXX "" OFF)
 
 # propagates CMake configuration options to the compiler
 function(configureProject)
