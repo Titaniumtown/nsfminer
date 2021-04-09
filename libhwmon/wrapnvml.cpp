@@ -186,12 +186,43 @@ int wrap_nvml_get_mem_tempC(wrap_nvml_handle* nvmlh, int gpuindex, unsigned int*
     return 0;
 }
 
+/*
+ * nv_get_fanspeed
+ *   call the nvidia command to get fan speed. 
+ *      nvidia-settings -t -q  [fan:0]/GPUTargetFanSpeed
+ *   for this function to work, it must set environment variable:
+ *      export DISPLAY=:0
+ */
+int nv_get_fanspeed(int gpuindex, unsigned int *speed){
+    FILE *fp;
+    int rv = -1;
+    char cmd[64] = {0}, buf[64] = {0};
+    sprintf(cmd, "nvidia-settings -t -q [fan:%d]/GPUTargetFanSpeed", gpuindex);
+
+    if ((fp = popen(cmd, "r")) == NULL) {
+        return -1;
+    }
+
+    if (fgets(buf, sizeof(buf), fp) != NULL) {
+        *speed = atoi(buf);
+        rv = 0;
+    }
+
+    pclose(fp);
+
+    return rv;
+}
+
 int wrap_nvml_get_fanpcnt(wrap_nvml_handle* nvmlh, int gpuindex, unsigned int* fanpcnt) {
     if (gpuindex < 0 || gpuindex >= nvmlh->nvml_gpucount)
         return -1;
 
+#ifdef __linux__
+    return nv_get_fanspeed(gpuindex, fanpcnt);
+#else
     if (nvmlh->nvmlDeviceGetFanSpeed(nvmlh->devs[gpuindex], fanpcnt) != WRAPNVML_SUCCESS)
         return -1;
+#endif
 
     return 0;
 }
