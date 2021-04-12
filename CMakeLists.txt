@@ -102,7 +102,7 @@ message("-- ETHASHCPU        Build CPU components (only for development)  ${ETHA
 message("-- APICORE          Build API Server components                  ${APICORE}")
 message("-- DEVBUILD         Build with dev logging                       ${DEVBUILD}")
 message("-- USE_SYS_OPENCL   Build with system OpenCL                     ${USE_SYS_OPENCL}")
-message("-- USE_SYS_OPENCL   Build with system Libraries                  ${USE_SYS_OPENCL}")
+message("-- USE_SYS_LIBS     Build with system Libraries                  ${USE_SYS_LIBS}")
 message("----------------------------------------------------------------------------")
 message("")
 
