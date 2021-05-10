@@ -18,7 +18,7 @@
 #include <functional>
 
 #define MAX_STREAMS 4
-#define CU_TARGET_BATCH_TIME 0.9F // seconds
+#define CU_TARGET_BATCH_TIME 0.5F // seconds
 
 namespace dev {
 namespace eth {

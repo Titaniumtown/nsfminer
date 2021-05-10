@@ -33,6 +33,8 @@ struct EpochContext {
     size_t lightSize;
     ethash_hash512* lightCache = nullptr;
     int dagNumItems;
+    uint32_t dagInv;
+    uint32_t dagShift;
     uint64_t dagSize;
 };
 

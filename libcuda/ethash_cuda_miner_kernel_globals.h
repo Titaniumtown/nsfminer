@@ -10,6 +10,8 @@
 #pragma once
 
 __constant__ uint32_t d_dag_size;
+__constant__ uint32_t d_dag_inv;
+__constant__ uint32_t d_dag_shift;
 __constant__ hash128_t* d_dag;
 __constant__ uint32_t d_light_size;
 __constant__ hash64_t* d_light;

@@ -149,6 +149,10 @@ void Miner::setEpoch(WorkPackage const& w) {
     m_epochContext.lightSize = ethash::get_light_cache_size(ec.light_cache_num_items);
     m_epochContext.dagNumItems = ec.full_dataset_num_items;
     m_epochContext.dagSize = ethash::get_full_dataset_size(ec.full_dataset_num_items);
+    m_epochContext.dagShift = 0;
+    while ((m_epochContext.dagInv = (0x100000000 << m_epochContext.dagShift) / m_epochContext.dagNumItems + 1) <
+           0x80000000)
+        m_epochContext.dagShift++;
     m_epochContext.lightCache = new ethash_hash512[m_epochContext.lightNumItems];
     memcpy(m_epochContext.lightCache, ec.light_cache, m_epochContext.lightSize);
 }
