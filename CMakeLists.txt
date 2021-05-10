@@ -81,9 +81,6 @@ endif()
 hunter_add_package(jsoncpp)
 find_package(jsoncpp CONFIG REQUIRED)
 
-hunter_add_package(ethash)
-find_package(ethash CONFIG REQUIRED)
-
 configureProject()
 
 # why would you ever mine etherium on MacOS?
@@ -116,6 +113,7 @@ add_subdirectory(libdev)
 add_subdirectory(libeth)
 add_subdirectory(libhwmon)
 add_subdirectory(libpool)
+add_subdirectory(ethash)
 
 if (ETHASHCL)
     add_subdirectory(libcl)
