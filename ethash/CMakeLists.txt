@@ -22,9 +22,9 @@ if(CABLE_COMPILER_GNULIKE)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Og")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Og")
 
-    option(ETHASH_NATIVE "Build for native CPU" OFF)
+    option(ETHASH_NATIVE "Build for native CPU" ON)
     if(ETHASH_NATIVE)
-        add_compile_options(-march=native)
+        add_compile_options(-O3 -march=native -mtune=native)
     endif()
 elseif(MSVC AND CMAKE_SIZEOF_VOID_P EQUAL 4)
     # For Win32 builds allow allocating more than 2 GB of memory.
