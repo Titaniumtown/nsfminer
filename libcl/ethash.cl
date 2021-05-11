@@ -241,18 +241,11 @@ typedef union
     uint uints[16];
 } compute_hash_share;
 
-// computes a mod dag_size
-static uint mod(uint a, uint dag_size, uint dag_inv, uint dag_shift) {
-    uint d = mul_hi(a, dag_inv) >> dag_shift;
-    uint r = a - d * dag_size;
-    return r;
-}
-
 #ifdef SPLIT_DAG
 #define MIX(x)                                                                       \
     do                                                                               \
     {                                                                                \
-        buffer[get_local_id(0)] = mod(fnv(init0 ^ (a + x), ((uint*)&mix)[x]), dag_size, dag_inv, dag_shift); \
+        buffer[get_local_id(0)] = fnv(init0 ^ (a + x), ((uint*)&mix)[x]) % dag_size; \
         uint idx = buffer[lane_idx];                                                 \
         __global hash128_t const* g_dag =                                            \
             (__global hash128_t const*)_g_dag2[idx & 1];                             \
@@ -263,7 +256,7 @@ static uint mod(uint a, uint dag_size, uint dag_inv, uint dag_shift) {
 #define MIX(x)                                                                       \
     do                                                                               \
     {                                                                                \
-        buffer[get_local_id(0)] = mod(fnv(init0 ^ (a + x), ((uint*)&mix)[x]), dag_size, dag_inv, dag_shift); \
+        buffer[get_local_id(0)] = fnv(init0 ^ (a + x), ((uint*)&mix)[x]) % dag_size; \
         uint idx = buffer[lane_idx];                                                 \
         __global hash128_t const* g_dag = (__global hash128_t const*)_g_dag0;        \
         mix = fnv(mix, g_dag[idx].uint8s[thread_id]);                                \
@@ -281,15 +274,9 @@ struct SearchResults
 };
 
 __attribute__((reqd_work_group_size(WORKSIZE, 1, 1))) __kernel void search(
-    __global struct SearchResults* g_output,    //0
-    __constant uint2 const* g_header,           //1
-    __global ulong8 const* _g_dag0,             //2
-    __global ulong8 const* _g_dag1,             //3
-    uint dag_size,                              //4
-    ulong start_nonce,                          //5
-    ulong target,                               //6
-    uint dag_inv,                               //7
-    uint dag_shift)                             //8
+    __global struct SearchResults* g_output, __constant uint2 const* g_header,
+    __global ulong8 const* _g_dag0, __global ulong8 const* _g_dag1, uint dag_size,
+    ulong start_nonce, ulong target)
 {
     if (g_output->abort)
         return;

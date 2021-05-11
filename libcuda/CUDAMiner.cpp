@@ -111,8 +111,8 @@ bool CUDAMiner::initEpoch() {
 
         HostToDevice(light, m_epochContext.lightCache, m_epochContext.lightSize);
 
-        set_constants(dag, m_epochContext.dagNumItems, light, m_epochContext.lightNumItems,
-            m_epochContext.dagInv, m_epochContext.dagShift); // in ethash_cuda_miner_kernel.cu
+        set_constants(dag, m_epochContext.dagNumItems, light,
+                      m_epochContext.lightNumItems); // in ethash_cuda_miner_kernel.cu
 
         ethash_generate_dag(m_epochContext.dagSize, m_block_multiple, m_deviceDescriptor.cuBlockSize, m_streams[0]);
 
@@ -175,17 +175,9 @@ void CUDAMiner::workLoop() {
 
             // adjust work multiplier
             float hr = RetrieveHashRate();
-            if (hr >= 1e7) {
+            if (hr >= 1e7)
                 m_block_multiple = uint32_t((hr * CU_TARGET_BATCH_TIME) /
                                             (m_deviceDescriptor.cuStreamSize * m_deviceDescriptor.cuBlockSize));
-                m_block_multiple--;
-                m_block_multiple |= m_block_multiple >> 1; 
-                m_block_multiple |= m_block_multiple >> 2; 
-                m_block_multiple |= m_block_multiple >> 4;
-                m_block_multiple |= m_block_multiple >> 8;
-                m_block_multiple |= m_block_multiple >> 16;
-                m_block_multiple++;                
-            }
 
             // Eventually start searching
             search(current.header.data(), upper64OfBoundary, current.startNonce, current);
