@@ -1,4 +1,13 @@
-# nsfminer (no stinkin' fees)
+# nsfminer (no stinkin' fees) - Performance fork
+
+## Benchmark
+Here's a quick benchmark I did of this fork of nsfminer vs nsfminer vs teamredminer on my RX 480:
+
+original nsfminer: `24.5 mh/s`
+
+my fork of nsfminer: `27.5 mh/s`
+
+teamreadminer: `28.35 mh/s`
 
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)][Gitter]
