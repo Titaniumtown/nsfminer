@@ -603,20 +603,18 @@ static __constant uint2 const Keccak_f1600_RC[24] = {
     }while(0)
     
     
-#define KECCAK_PROCESS(st, in_size, out_size)     \
-    do                                           \
-    {   										 \
+#define KECCAK_PROCESS(st, in_size, out_size)    \
+    do {                                         \
         uchar r=0;								 \
-        do           							 \
-        {     									 \
+        do {         							 \
 	            KECCAKF_1600_RND_gt8(st, r);     \
             r++;								 \
-        }while(r<23);   						 \
+        } while(r<23);   						 \
         if ( out_size == 1 )					 \
 	        KECCAKF_1600_RND_eq1(st, r); 		 \
 	    else							  		 \
 	        KECCAKF_1600_RND_eq8(st, r); 		 \
-     } while (0)
+     } while(0)
 
 
 #define fnv(x, y) ((x)*FNV_PRIME ^ (y))
