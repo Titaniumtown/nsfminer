@@ -111,6 +111,8 @@ class CLMiner : public Miner {
     }
 
     unsigned m_dagItems = 0;
+    uint32_t m_dagInv = 0;
+    uint32_t m_dagShift = 0;
     std::mutex m_abortMutex;
 };
 
