@@ -240,7 +240,7 @@ CLMiner::~CLMiner() {
 
 // NOTE: The following struct must match the one defined in
 // ethash.cl
-struct SearchResults {
+struct __attribute__((packed)) __attribute__((aligned(128))) SearchResults {
     uint32_t count;
     uint32_t hashCount;
     uint32_t abort;
