@@ -153,12 +153,12 @@ string dev::getScaledSize(double _value, double _divisor, int _precision, string
 }
 
 string dev::getFormattedHashes(double _hr, ScaleSuffix _suffix, int _precision) {
-    static string suffixes[] = {"h", "Kh", "Mh", "Gh", "Th"}; // https://github.com/KramerIT/ethminer/commit/7b00a948c9226c83753dcb352b087f0399a84308
+    static string suffixes[] = {"h", "Kh", "Mh", "Gh"};
     return dev::getScaledSize(_hr, 1000.0, _precision, suffixes, 4, _suffix);
 }
 
 string dev::getFormattedMemory(double _mem, ScaleSuffix _suffix, int _precision) {
-    static string suffixes[] = {"B", "KB", "MB", "GB", "TB"};
+    static string suffixes[] = {"B", "KB", "MB", "GB"};
     return dev::getScaledSize(_mem, 1024.0, _precision, suffixes, 4, _suffix);
 }
 
