@@ -5,7 +5,7 @@ Here's a quick benchmark I did of this fork of nsfminer vs nsfminer vs teamredmi
 
 original nsfminer: `24.5 mh/s`
 
-my fork of nsfminer: `27.5 mh/s`
+my fork of nsfminer: `27.64 mh/s`
 
 teamreadminer: `28.35 mh/s`
 
