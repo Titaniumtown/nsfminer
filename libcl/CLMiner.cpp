@@ -576,7 +576,8 @@ bool CLMiner::initEpoch() {
     }
 
     try {
-        char options[256] = {0};
+        // char options[256] = {0};
+        char options[66] = "-cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations";
         int computeCapability = 0;
 
         // Nvidia

@@ -6272,9 +6272,9 @@ public:
                 0,
                 NULL,
 #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
-                "-cl-std=CL2.0",
+                "-cl-std=CL2.0 -cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #else
-                "",
+                "-cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #endif // #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
                 NULL,
                 NULL);
@@ -6309,9 +6309,9 @@ public:
                 0,
                 NULL,
 #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
-                "-cl-std=CL2.0",
+                "-cl-std=CL2.0 -cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #else
-                "",
+                "-cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #endif // #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
                 NULL,
                 NULL);
@@ -6435,9 +6435,9 @@ public:
                 0,
                 NULL,
 #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
-                "-cl-std=CL2.0",
+                "-cl-std=CL2.0 -cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #else
-                "",
+                "-cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #endif // #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
                 NULL,
                 NULL);
@@ -6488,9 +6488,9 @@ public:
                 0,
                 NULL,
 #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
-                "-cl-std=CL2.0",
+                "-cl-std=CL2.0 -cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #else
-                "",
+                "-cl-mad-enable -cl-finite-math-only -cl-unsafe-math-optimizations",
 #endif // #if !defined(CL_HPP_CL_1_2_DEFAULT_BUILD)
                 NULL,
                 NULL);
