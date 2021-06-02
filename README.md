@@ -7,7 +7,7 @@ original nsfminer: `25.43 mh/s`
 
 my fork of nsfminer: `28.81 mh/s`
 
-teamreadminer: `29.58 mh/s`
+teamredminer: `29.58 mh/s`
 
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)][Gitter]
