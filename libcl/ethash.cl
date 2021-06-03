@@ -264,9 +264,7 @@ static uint mod(uint a, uint dag_size, uint dag_inv, uint dag_shift) {
     do                                                                               \
     {                                                                                \
         buffer[get_local_id(0)] = mod(fnv(init0 ^ (a + x), ((uint*)&mix)[x]), dag_size, dag_inv, dag_shift); \
-        uint idx = buffer[lane_idx];                                                 \
-        __global hash128_t const* g_dag = (__global hash128_t const*)_g_dag0;        \
-        mix = fnv(mix, g_dag[idx].uint8s[thread_id]);                                \
+        mix = fnv(mix, g_dag_uint[(buffer[lane_idx]*4)+thread_id]);                                \
         mem_fence(CLK_LOCAL_MEM_FENCE);                                              \
     } while (0)
 #endif
@@ -300,6 +298,8 @@ __attribute__((reqd_work_group_size(WORKSIZE, 1, 1))) __kernel void search(
 #ifdef SPLIT_DAG
     __global const ulong8* _g_dag2[2] = {_g_dag0, _g_dag1};
 #endif
+
+    __global uint8 const* g_dag_uint = (__global uint8 const*)_g_dag0;
 
     __local compute_hash_share sharebuf[WORKSIZE / 4];
     __local uint buffer[WORKSIZE];
