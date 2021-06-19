@@ -5,57 +5,59 @@
 
 #include <stdint.h>
 
-static uint32_t rol(uint32_t x, unsigned s)
+static uint64_t rol(uint64_t x, unsigned s)
 {
-    return (x << s) | (x >> (32 - s));
+    return (x << s) | (x >> (64 - s));
 }
 
-static const uint32_t round_constants[22] = {
-    0x00000001,
-    0x00008082,
-    0x0000808A,
-    0x80008000,
-    0x0000808B,
-    0x80000001,
-    0x80008081,
-    0x00008009,
-    0x0000008A,
-    0x00000088,
-    0x80008009,
-    0x8000000A,
-    0x8000808B,
-    0x0000008B,
-    0x00008089,
-    0x00008003,
-    0x00008002,
-    0x00000080,
-    0x0000800A,
-    0x8000000A,
-    0x80008081,
-    0x00008080,
+static const uint64_t round_constants[24] = {
+    0x0000000000000001,
+    0x0000000000008082,
+    0x800000000000808a,
+    0x8000000080008000,
+    0x000000000000808b,
+    0x0000000080000001,
+    0x8000000080008081,
+    0x8000000000008009,
+    0x000000000000008a,
+    0x0000000000000088,
+    0x0000000080008009,
+    0x000000008000000a,
+    0x000000008000808b,
+    0x800000000000008b,
+    0x8000000000008089,
+    0x8000000000008003,
+    0x8000000000008002,
+    0x8000000000000080,
+    0x000000000000800a,
+    0x800000008000000a,
+    0x8000000080008081,
+    0x8000000000008080,
+    0x0000000080000001,
+    0x8000000080008008,
 };
 
-void ethash_keccakf800(uint32_t state[25])
+void ethash_keccakf1600(uint64_t state[25])
 {
-    /* The implementation directly translated from ethash_keccakf1600. */
+    /* The implementation based on the "simple" implementation by Ronny Van Keer. */
 
     int round;
 
-    uint32_t Aba, Abe, Abi, Abo, Abu;
-    uint32_t Aga, Age, Agi, Ago, Agu;
-    uint32_t Aka, Ake, Aki, Ako, Aku;
-    uint32_t Ama, Ame, Ami, Amo, Amu;
-    uint32_t Asa, Ase, Asi, Aso, Asu;
+    uint64_t Aba, Abe, Abi, Abo, Abu;
+    uint64_t Aga, Age, Agi, Ago, Agu;
+    uint64_t Aka, Ake, Aki, Ako, Aku;
+    uint64_t Ama, Ame, Ami, Amo, Amu;
+    uint64_t Asa, Ase, Asi, Aso, Asu;
 
-    uint32_t Eba, Ebe, Ebi, Ebo, Ebu;
-    uint32_t Ega, Ege, Egi, Ego, Egu;
-    uint32_t Eka, Eke, Eki, Eko, Eku;
-    uint32_t Ema, Eme, Emi, Emo, Emu;
-    uint32_t Esa, Ese, Esi, Eso, Esu;
+    uint64_t Eba, Ebe, Ebi, Ebo, Ebu;
+    uint64_t Ega, Ege, Egi, Ego, Egu;
+    uint64_t Eka, Eke, Eki, Eko, Eku;
+    uint64_t Ema, Eme, Emi, Emo, Emu;
+    uint64_t Esa, Ese, Esi, Eso, Esu;
 
-    uint32_t Ba, Be, Bi, Bo, Bu;
+    uint64_t Ba, Be, Bi, Bo, Bu;
 
-    uint32_t Da, De, Di, Do, Du;
+    uint64_t Da, De, Di, Do, Du;
 
     Aba = state[0];
     Abe = state[1];
@@ -83,7 +85,7 @@ void ethash_keccakf800(uint32_t state[25])
     Aso = state[23];
     Asu = state[24];
 
-    for (round = 0; round < 22; round += 2)
+    for (round = 0; round < 24; round += 2)
     {
         /* Round (round + 0): Axx -> Exx */
 
@@ -100,8 +102,8 @@ void ethash_keccakf800(uint32_t state[25])
         Du = Bo ^ rol(Ba, 1);
 
         Ba = Aba ^ Da;
-        Be = rol(Age ^ De, 12);
-        Bi = rol(Aki ^ Di, 11);
+        Be = rol(Age ^ De, 44);
+        Bi = rol(Aki ^ Di, 43);
         Bo = rol(Amo ^ Do, 21);
         Bu = rol(Asu ^ Du, 14);
         Eba = Ba ^ (~Be & Bi) ^ round_constants[round];
@@ -113,8 +115,8 @@ void ethash_keccakf800(uint32_t state[25])
         Ba = rol(Abo ^ Do, 28);
         Be = rol(Agu ^ Du, 20);
         Bi = rol(Aka ^ Da, 3);
-        Bo = rol(Ame ^ De, 13);
-        Bu = rol(Asi ^ Di, 29);
+        Bo = rol(Ame ^ De, 45);
+        Bu = rol(Asi ^ Di, 61);
         Ega = Ba ^ (~Be & Bi);
         Ege = Be ^ (~Bi & Bo);
         Egi = Bi ^ (~Bo & Bu);
@@ -133,20 +135,20 @@ void ethash_keccakf800(uint32_t state[25])
         Eku = Bu ^ (~Ba & Be);
 
         Ba = rol(Abu ^ Du, 27);
-        Be = rol(Aga ^ Da, 4);
+        Be = rol(Aga ^ Da, 36);
         Bi = rol(Ake ^ De, 10);
         Bo = rol(Ami ^ Di, 15);
-        Bu = rol(Aso ^ Do, 24);
+        Bu = rol(Aso ^ Do, 56);
         Ema = Ba ^ (~Be & Bi);
         Eme = Be ^ (~Bi & Bo);
         Emi = Bi ^ (~Bo & Bu);
         Emo = Bo ^ (~Bu & Ba);
         Emu = Bu ^ (~Ba & Be);
 
-        Ba = rol(Abi ^ Di, 30);
-        Be = rol(Ago ^ Do, 23);
-        Bi = rol(Aku ^ Du, 7);
-        Bo = rol(Ama ^ Da, 9);
+        Ba = rol(Abi ^ Di, 62);
+        Be = rol(Ago ^ Do, 55);
+        Bi = rol(Aku ^ Du, 39);
+        Bo = rol(Ama ^ Da, 41);
         Bu = rol(Ase ^ De, 2);
         Esa = Ba ^ (~Be & Bi);
         Ese = Be ^ (~Bi & Bo);
@@ -170,8 +172,8 @@ void ethash_keccakf800(uint32_t state[25])
         Du = Bo ^ rol(Ba, 1);
 
         Ba = Eba ^ Da;
-        Be = rol(Ege ^ De, 12);
-        Bi = rol(Eki ^ Di, 11);
+        Be = rol(Ege ^ De, 44);
+        Bi = rol(Eki ^ Di, 43);
         Bo = rol(Emo ^ Do, 21);
         Bu = rol(Esu ^ Du, 14);
         Aba = Ba ^ (~Be & Bi) ^ round_constants[round + 1];
@@ -183,8 +185,8 @@ void ethash_keccakf800(uint32_t state[25])
         Ba = rol(Ebo ^ Do, 28);
         Be = rol(Egu ^ Du, 20);
         Bi = rol(Eka ^ Da, 3);
-        Bo = rol(Eme ^ De, 13);
-        Bu = rol(Esi ^ Di, 29);
+        Bo = rol(Eme ^ De, 45);
+        Bu = rol(Esi ^ Di, 61);
         Aga = Ba ^ (~Be & Bi);
         Age = Be ^ (~Bi & Bo);
         Agi = Bi ^ (~Bo & Bu);
@@ -203,20 +205,20 @@ void ethash_keccakf800(uint32_t state[25])
         Aku = Bu ^ (~Ba & Be);
 
         Ba = rol(Ebu ^ Du, 27);
-        Be = rol(Ega ^ Da, 4);
+        Be = rol(Ega ^ Da, 36);
         Bi = rol(Eke ^ De, 10);
         Bo = rol(Emi ^ Di, 15);
-        Bu = rol(Eso ^ Do, 24);
+        Bu = rol(Eso ^ Do, 56);
         Ama = Ba ^ (~Be & Bi);
         Ame = Be ^ (~Bi & Bo);
         Ami = Bi ^ (~Bo & Bu);
         Amo = Bo ^ (~Bu & Ba);
         Amu = Bu ^ (~Ba & Be);
 
-        Ba = rol(Ebi ^ Di, 30);
-        Be = rol(Ego ^ Do, 23);
-        Bi = rol(Eku ^ Du, 7);
-        Bo = rol(Ema ^ Da, 9);
+        Ba = rol(Ebi ^ Di, 62);
+        Be = rol(Ego ^ Do, 55);
+        Bi = rol(Eku ^ Du, 39);
+        Bo = rol(Ema ^ Da, 41);
         Bu = rol(Ese ^ De, 2);
         Asa = Ba ^ (~Be & Bi);
         Ase = Be ^ (~Bi & Bo);
